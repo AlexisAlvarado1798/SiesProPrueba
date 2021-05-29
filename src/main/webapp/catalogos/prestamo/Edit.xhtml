@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPrestamoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+
+            <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="2">
+
+                    <h:outputLabel value="#{bundle.EditPrestamoLabel_codigo}" for="codigo" />
+                    <h:outputText id="codigo" value="#{prestamoController.selected.codigo}" 
+                                  title="#{bundle.EditPrestamoTitle_codigo}" />
+
+                    <h:outputLabel value="#{bundle.EditPrestamoLabel_fechasolicitud}" for="fechasolicitud" />
+                    <h:outputText id="fechasolicitud" value="#{prestamoController.selected.fechasolicitud}"
+                                  title="#{bundle.EditPrestamoTitle_fechasolicitud}"/>
+
+                    <h:outputLabel value="Fechas:" for="msgs" />
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:fieldset legend="Fechas" style="margin-bottom:20px" >
+                        <h:panelGrid columns="2" cellpadding="5">
+
+
+                            <p:column>
+                                Fecha Salida: 
+                                <p:calendar id="fechasalida"
+                                            value="#{prestamoController.selected.fechasalida}" 
+                                            locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                            mindate="today();" readonlyInput="true"/> 
+                                Fecha Devolución:
+
+                                <p:calendar id="fechadevolucion"
+                                            value="#{prestamoController.selected.fechadevolucion}" 
+                                            locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                            mindate="today();" />
+
+                            </p:column>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                    
+                    <br></br>
+
+                    <h:outputLabel value="#{bundle.CreatePrestamoLabel_estado}" for="estado" />
+
+                    <p:selectOneMenu id="estado" value="#{prestamoController.selected.estado}" 
+                                     title="#{bundle.EditPrestamoTitle_estado}" required="true"
+                                     requiredMessage="#{bundle.CreatePrestamoRequiredMessage_estado}">
+                        <f:selectItem itemLabel="En espera" itemValue="0"/>
+                        <f:selectItem itemLabel="Rechazada" itemValue="1"/>
+                        <f:selectItem itemLabel="Aceptada" itemValue="2"/>
+
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="#{bundle.CreatePrestamoLabel_fkFicha}" for="fkFicha" />
+                    <h:outputText id="fkFicha" value="#{prestamoController.selected.fkFicha.codigo}" ></h:outputText>
+
+                    <h:outputLabel value="#{bundle.EditPrestamoLabel_fkMunicipio}" for="fkMunicipio" />
+                    <h:outputText id="fkMunicipio" value="#{prestamoController.selected.fkMunicipio.nombre}" 
+                                  title="#{bundle.EditPrestamoTitle_fkMunicipio}" ></h:outputText>
+
+                    <h:outputLabel value="#{bundle.EditPrestamoLabel_fkResponsable}" for="fkResponsable" />
+                    <h:outputText id="fkResponsable" value="#{prestamoController.selected.fkResponsable.nombres} -  #{prestamoController.selected.fkResponsable.apellidos}" 
+                                  title="#{bundle.EditPrestamoTitle_fkResponsable}" ></h:outputText>
+
+                    <h:outputLabel value="#{bundle.CreateDetalleprestamoLabel_descripicion}" for="descripicion" />
+
+
+                    <h:outputText id="descripicion" value="#{prestamoController.selected.observacion}" 
+                                  title="#{bundle.CreateDetalleprestamoTitle_descripicion}" />
+
+<!--
+                   <p:panelGrid id="contenedorEquipos" rendered="# {prestamoController.selected != null}">
+                        
+                        <h:outputLabel value="# {bundle.CreatePrestamoLabel_fkEquipo}" for="pickList" />
+                        <p:pickList id="pickList" value="# {prestamoController.equiposPrestamo}" 
+                                    var="equipos"  
+                                    required="false"
+                                    itemLabel="# {equipos}" 
+                                    itemValue="# {equipos}" />
+
+
+                    </p:panelGrid>-->
+                     <p:fieldset legend="Equipos: " style="margin-bottom:20px">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p:dataTable id="tblequipo" value="#{prestamoController.equiposPres}" var="item" 
+                                         widgetVar="carsTable"
+                                         editable="true"
+                                         rowIndexVar="rowIndex"
+                                         >
+
+                                <p:column
+                                    headerText = "#{bundle.ListEquipoTitle_nombre}"
+                                    sortBy = "#{item.nombre}">
+                                    <h:outputText value="#{item.nombre}"/>
+                                </p:column>
+
+                            </p:dataTable> 
+                        </h:panelGrid>
+                    </p:fieldset>
+
+
+                </h:panelGrid>
+                <h:commandLink action="#{prestamoController.update}" value="#{bundle.EditPrestamoSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditPrestamoViewLink}"/>
+                <br />
+                <h:commandLink action="#{prestamoController.prepareList}" value="#{bundle.EditPrestamoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditPrestamoIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditMantenimientoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditMantenimientoLabel_codigo}" for="codigo" />
+                    <h:inputText id="codigo" value="#{mantenimientoController.selected.codigo}" title="#{bundle.EditMantenimientoTitle_codigo}" required="true" requiredMessage="#{bundle.EditMantenimientoRequiredMessage_codigo}"/>
+                    <h:outputLabel value="#{bundle.EditMantenimientoLabel_fechainspeccion}" for="fechainspeccion" />
+                    <h:inputText id="fechainspeccion" value="#{mantenimientoController.selected.fechainspeccion}" title="#{bundle.EditMantenimientoTitle_fechainspeccion}" required="true" requiredMessage="#{bundle.EditMantenimientoRequiredMessage_fechainspeccion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditMantenimientoLabel_observacion}" for="observacion" />
+                    <h:inputText id="observacion" value="#{mantenimientoController.selected.observacion}" title="#{bundle.EditMantenimientoTitle_observacion}" required="true" requiredMessage="#{bundle.EditMantenimientoRequiredMessage_observacion}"/>
+                    <h:outputLabel value="#{bundle.EditMantenimientoLabel_fkEquipo}" for="fkEquipo" />
+                    <h:selectOneMenu id="fkEquipo" value="#{mantenimientoController.selected.fkEquipo}" title="#{bundle.EditMantenimientoTitle_fkEquipo}" required="true" requiredMessage="#{bundle.EditMantenimientoRequiredMessage_fkEquipo}">
+                        <f:selectItems value="#{equipoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditMantenimientoLabel_fkPersona}" for="fkPersona" />
+                    <h:selectOneMenu id="fkPersona" value="#{mantenimientoController.selected.fkPersona}" title="#{bundle.EditMantenimientoTitle_fkPersona}" >
+                        <f:selectItems value="#{personaController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditMantenimientoLabel_fkTipomantenimiento}" for="fkTipomantenimiento" />
+                    <h:selectOneMenu id="fkTipomantenimiento" value="#{mantenimientoController.selected.fkTipomantenimiento}" title="#{bundle.EditMantenimientoTitle_fkTipomantenimiento}" required="true" requiredMessage="#{bundle.EditMantenimientoRequiredMessage_fkTipomantenimiento}">
+                        <f:selectItems value="#{tipomantenimientoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{mantenimientoController.update}" value="#{bundle.EditMantenimientoSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditMantenimientoViewLink}"/>
+                <br />
+                <h:commandLink action="#{mantenimientoController.prepareList}" value="#{bundle.EditMantenimientoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditMantenimientoIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

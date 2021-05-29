@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListMunicipioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListMunicipioEmpty}" rendered="#{municipioController.items.rowCount == 0}"/>
+                 <p:dataTable id="tblmunicipio" value="#{municipioController.items}" var="item" 
+                                 widgetVar="carsTable"
+                                 paginator="true" rows="5" emptyMessage="#{bundle.noresultadosfiltro}"
+                                 paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                 rowsPerPageTemplate="5, 10, 15">
+
+                        <f:facet name="{Exporters}">
+                            <div style="float: bottom; padding-top: 5px ">
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/xls.png" width="24"/>
+                                    <p:dataExporter type="xls" target="tblmunicipio"
+                                                    pageOnly="true" fileName="municipios"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/pdf.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="tblmunicipio"
+                                                    pageOnly="true" fileName="municipios" preProcessor="#{personaController.preProcessPDF}"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/csv.png" width="24"/>
+                                    <p:dataExporter type="csv" target="tblmunicipio"
+                                                    pageOnly="true" fileName="municipios"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/xml.png" width="24"/>
+                                    <p:dataExporter type="xml" target="tblmunicipio"
+                                                    pageOnly="true" fileName="municipios"/>
+                                </h:commandLink>
+                            </div>
+                        </f:facet>
+                     
+                        <p:column headerText="#{bundle.ListMunicipioTitle_codigo}">
+                            <h:outputText value="#{item.codigo}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListMunicipioTitle_nombre}" filterMatchMode="contains" 
+                               filterBy="#{item.nombre}">
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListMunicipioTitle_fkDepartamento}" filterMatchMode="contains" 
+                               filterBy="#{item.fkDepartamento.nombre}">
+                            <h:outputText value="#{item.fkDepartamento.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink  class="link" action="#{municipioController.prepareView}" value="#{bundle.ListMunicipioViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink  class="link" action="#{municipioController.prepareEdit}" value="#{bundle.ListMunicipioEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="link"  action="#{municipioController.destroy}" value="#{bundle.ListMunicipioDestroyLink}"/>
+                        </p:column>
+                    </p:dataTable>
+                
+                <h3>Exportar</h3>
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/xls.png"/>
+                        <p:dataExporter type="xls" target="tblmunicipio"
+                                        fileName="municipios"
+                                        preProcessor="#{personaController.preProcessPDF}"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/pdf.png"/>
+                        <p:dataExporter type="pdf" target="tblmunicipio"
+                                        fileName="municipios"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/csv.png"/>
+                        <p:dataExporter type="csv" target="tblmunicipio"
+                                        fileName="municipios"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/xml.png"/>
+                        <p:dataExporter type="xml" target="tblequipo"
+                                        fileName="personas"/>
+                    </h:commandLink>
+
+                
+                <br />
+                <h:commandLink action="#{municipioController.prepareCreate}" value="#{bundle.ListMunicipioCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListMunicipioIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

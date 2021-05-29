@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateEntregaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+
+            <h:outputLabel class="msjObligatorios"
+                           value ="#{bundle.msjObligatorios}" /> 
+            <p:separator> </p:separator>
+
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{bundle.CreateEntregaLabel_fechaentregado}" for="fechaentregado" />
+                    <p:calendar id="fechainspeccion"
+                                value="#{entregaController.selected.fechaentregado}" 
+                                locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                mindate="today();"/>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEntregaLabel_fkPrestamo}" for="fkPrestamo" />
+                    <p:selectOneMenu id="fkPrestamo" value="#{entregaController.selected.fkPrestamo}" 
+                                     title="#{bundle.CreateEntregaTitle_fkPrestamo}" required="true" 
+                                     requiredMessage="#{bundle.CreateEntregaRequiredMessage_fkPrestamo}">
+                        <f:selectItems value="#{prestamoController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel>
+
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:fieldset legend="Equipos: " style="margin-bottom:20px">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p:dataTable id="tblequipo" value="#{equipoController.items}" var="item" 
+                                         widgetVar="carsTable"
+                                         editable="true"
+                                         rowIndexVar="rowIndex"
+                                         >
+
+                                <p:column
+                                    headerText = "#{bundle.ListEquipoTitle_nombre}"
+                                    sortBy = "#{item.nombre}">
+                                    <h:outputText value="#{item.nombre}"/>
+                                </p:column>
+
+                                <p:ajax event="cellEdit" listener="#{entregaController.onCellEdit}" />
+                                <p:ajax event="rowEdit" listener="#{entregaController.onRowEdit}" />
+                                <p:ajax event="rowEditCancel" listener="#{entregaController.onRowCancel}"  />
+
+                                <p:column 
+                                    headerText ="Observaciones">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{rowIndex}" /></f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText 
+                                                id="modelInput" value="" style="width:96%"/>
+<!--                                            <p:inputText 
+                                                id="modelInput" value="# {entregaController.observaciones.get(rowIndex)}" style="width:96%"/>-->
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column style="width:35px">
+                                    <p:rowEditor />
+                                </p:column>
+
+                                 
+                                 
+                                <!--<p:inputText id="observacion" value="# {detalleentregaController.selected.observacion}"-->
+                                             <!--title="# {bundle.CreateDetalleentregaTitle_observacion}" />-->
+                            </p:dataTable> 
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{entregaController.create}" value="#{bundle.CreateEntregaSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{entregaController.prepareList}" value="#{bundle.CreateEntregaShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateEntregaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

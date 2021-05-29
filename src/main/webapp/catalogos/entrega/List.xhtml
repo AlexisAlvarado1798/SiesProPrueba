@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListEntregaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListEntregaEmpty}" rendered="#{entregaController.items.rowCount == 0}"/>
+                <p:dataTable id="tblentrega" value="#{entregaController.items}" var="item" 
+                                 widgetVar="carsTable" emptyMessage="#{bundle.noresultadosfiltro}"
+                                 paginator="true" rows="5"
+                                 paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                 rowsPerPageTemplate="5, 10, 15">
+
+                        <f:facet name="{Exporters}">
+                            <div style="float: bottom; padding-top: 5px ">
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/xls.png" width="24"/>
+                                    <p:dataExporter type="xls" target="tblentrega"
+                                                    pageOnly="true" fileName="entregas"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/pdf.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="tblentrega"
+                                                    pageOnly="true" fileName="entregas" preProcessor="#{personaController.preProcessPDF}"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/csv.png" width="24"/>
+                                    <p:dataExporter type="csv" target="tblentrega"
+                                                    pageOnly="true" fileName="entregas"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/xml.png" width="24"/>
+                                    <p:dataExporter type="xml" target="tblentrega"
+                                                    pageOnly="true" fileName="entregas"/>
+                                </h:commandLink>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="#{bundle.ListEntregaTitle_fechaentregado}">
+                            <h:outputText value="#{item.fechaentregado}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.ListEntregaTitle_fkPrestamo}">
+                            <h:outputText value="#{item.fkPrestamo}"/>
+                        </p:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink class="link"  action="#{entregaController.prepareView}" value="#{bundle.ListEntregaViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="link"  action="#{entregaController.prepareEdit}" value="#{bundle.ListEntregaEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="link"  action="#{entregaController.destroy}" value="#{bundle.ListEntregaDestroyLink}"/>
+                        </h:column>
+                    </p:dataTable>
+                
+                 <h3>Exportar</h3>
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/xls.png"/>
+                        <p:dataExporter type="xls" target="tblentrega"
+                                        fileName="entregas"
+                                        preProcessor="#{personaController.preProcessPDF}"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/pdf.png"/>
+                        <p:dataExporter type="pdf" target="tblentrega"
+                                        fileName="entregas"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/csv.png"/>
+                        <p:dataExporter type="csv" target="tblentrega"
+                                        fileName="entregas"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/xml.png"/>
+                        <p:dataExporter type="xml" target="tblentrega"
+                                        fileName="entregas"/>
+                    </h:commandLink>
+              
+                <br />
+                <h:commandLink action="#{entregaController.prepareCreate}" value="#{bundle.ListEntregaCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListEntregaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

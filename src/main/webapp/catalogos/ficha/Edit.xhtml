@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditFichaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditFichaLabel_codigo}" for="codigo" />
+                    <h:inputText id="codigo" value="#{fichaController.selected.codigo}" title="#{bundle.EditFichaTitle_codigo}" required="true" requiredMessage="#{bundle.EditFichaRequiredMessage_codigo}"/>
+                    <h:outputLabel value="#{bundle.EditFichaLabel_fkVocero}" for="fkVocero" />
+                    <h:selectOneMenu id="fkVocero" value="#{fichaController.selected.fkVocero}" title="#{bundle.EditFichaTitle_fkVocero}" required="true" requiredMessage="#{bundle.EditFichaRequiredMessage_fkVocero}">
+                        <f:selectItems value="#{personaController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditFichaLabel_fkInstructor}" for="fkInstructor" />
+                    <h:selectOneMenu id="fkInstructor" value="#{fichaController.selected.fkInstructor}" title="#{bundle.EditFichaTitle_fkInstructor}" required="true" requiredMessage="#{bundle.EditFichaRequiredMessage_fkInstructor}">
+                        <f:selectItems value="#{personaController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditFichaLabel_fkProgramaformacion}" for="fkProgramaformacion" />
+                    <h:selectOneMenu id="fkProgramaformacion" value="#{fichaController.selected.fkProgramaformacion}" title="#{bundle.EditFichaTitle_fkProgramaformacion}" required="true" requiredMessage="#{bundle.EditFichaRequiredMessage_fkProgramaformacion}">
+                        <f:selectItems value="#{programaformacionController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{fichaController.update}" value="#{bundle.EditFichaSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditFichaViewLink}"/>
+                <br />
+                <h:commandLink action="#{fichaController.prepareList}" value="#{bundle.EditFichaShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditFichaIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditEstadousuarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditEstadousuarioLabel_fechainicio}" for="fechainicio" />
+                    <h:inputText id="fechainicio" value="#{estadousuarioController.selected.fechainicio}" title="#{bundle.EditEstadousuarioTitle_fechainicio}" required="true" requiredMessage="#{bundle.EditEstadousuarioRequiredMessage_fechainicio}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditEstadousuarioLabel_fechafin}" for="fechafin" />
+                    <h:inputText id="fechafin" value="#{estadousuarioController.selected.fechafin}" title="#{bundle.EditEstadousuarioTitle_fechafin}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditEstadousuarioLabel_fkEstado}" for="fkEstado" />
+                    <h:selectOneMenu id="fkEstado" value="#{estadousuarioController.selected.fkEstado}" title="#{bundle.EditEstadousuarioTitle_fkEstado}" required="true" requiredMessage="#{bundle.EditEstadousuarioRequiredMessage_fkEstado}">
+                        <f:selectItems value="#{estadoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditEstadousuarioLabel_fkUsuario}" for="fkUsuario" />
+                    <h:selectOneMenu id="fkUsuario" value="#{estadousuarioController.selected.fkUsuario}" title="#{bundle.EditEstadousuarioTitle_fkUsuario}" required="true" requiredMessage="#{bundle.EditEstadousuarioRequiredMessage_fkUsuario}">
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{estadousuarioController.update}" value="#{bundle.EditEstadousuarioSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditEstadousuarioViewLink}"/>
+                <br />
+                <h:commandLink action="#{estadousuarioController.prepareList}" value="#{bundle.EditEstadousuarioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditEstadousuarioIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

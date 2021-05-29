@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListFabricanteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+
+                <br/>
+
+                <h:outputText escape="false" value="#{bundle.ListFabricanteEmpty}" rendered="#{fabricanteController.items.rowCount == 0}"/>
+                <p:dataTable id="tblFabricante" value="#{fabricanteController.items}"
+                                 var="item"
+                                 paginator="true" rows="5" emptyMessage="#{bundle.noresultadosfiltro}"
+                                 paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                 rowsPerPageTemplate="5, 10, 15">
+
+                        <f:facet name="{Exporters}">
+                            <div style="float: bottom; padding-top: 5px ">
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/xls.png" width="24"/>
+                                    <p:dataExporter type="xls" target="tblFabricante"
+                                                    pageOnly="true" fileName="fabricantes"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/pdf.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="tblFabricante"
+                                                    pageOnly="true" fileName="fabricantes" preProcessor="#{personaController.preProcessPDF}"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/csv.png" width="24"/>
+                                    <p:dataExporter type="csv" target="tblFabricante"
+                                                    pageOnly="true" fileName="fabricantes"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/xml.png" width="24"/>
+                                    <p:dataExporter type="xml" target="tblFabricante"
+                                                    pageOnly="true" fileName="fabricantes"/>
+                                </h:commandLink>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="#{bundle.ListFabricanteTitle_nombre}"
+                                  filterMatchMode="contains"
+                                  filterBy="#{item.nombre}">
+                                  <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListFabricanteTitle_direccion}">
+                            <h:outputText value="#{item.direccion}"/>
+                        </p:column>
+                        <p:column exportable="false">
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink class="link"  action="#{fabricanteController.prepareView}" value="#{bundle.ListFabricanteViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="link"  action="#{fabricanteController.prepareEdit}" value="#{bundle.ListFabricanteEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink  class="link" action="#{fabricanteController.destroy}" value="#{bundle.ListFabricanteDestroyLink}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <h3>Exportar</h3>
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/xls.png"/>
+                        <p:dataExporter type="xls" target="tblFabricante"
+                                        fileName="Fabricantes"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/pdf.png"/>
+                        <p:dataExporter type="pdf" target="tblFabricante"
+                                        fileName="Fabricantes"
+                                        preProcessor="#{personaController.preProcessPDF}"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/csv.png"/>
+                        <p:dataExporter type="csv" target="tblFabricante"
+                                        fileName="Fabricantes"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/xml.png"/>
+                        <p:dataExporter type="xml" target="tblFabricante"
+                                        fileName="Fabricantes"/>
+                    </h:commandLink>
+
+                <br />
+                <h:commandLink action="#{fabricanteController.prepareCreate}" value="#{bundle.ListFabricanteCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListFabricanteIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

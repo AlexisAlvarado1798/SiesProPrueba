@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <link href="estilo.css" rel="stylesheet" type="text/css"/>
+        <title>Formato</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="resources/css/estilo.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <form>
+            <div class="presentacion"> 
+                <!-- <img  src="sena.jpg" alt="logo" width="100" height="100"/> -->
+                <div class="logo"></div>
+                <h2>SERVICIO NACIONAL DE APRENDIZAJE </h2>
+                <h1 style="margin-left: 139px;">AUTORIZACIÓN DE SALIDA DE ELEMENTOS DE PROPIEDAD DEL SENA.</h1>
+                <h1>AMBIENTE DE SIMULACIÓN EN SALUD.</h1>
+            </div>
+
+            <div class="contenedor"> 
+                <div class="columna1"> 
+                    <p> FECHA: <input type="text" value="#{prestamoController.selected.fechasolicitud}" /></p>
+                    <p> YO: <input type="text"  /></p>
+                    <p> AUTORIZO A: <input type="text"  /></p>
+                    <p> EN: <input type="text"  /></p>
+                </div>
+                <div class="columna2">
+                    <p> No. <input type="text"  /></p>
+
+                    <p> OCUPANDO EL CARGO DE: <input type="text"  /></p>
+
+                    <p> Y QUE SE DESEMPEÑA COMO: <input type="text"  /></p>
+
+                    <p> PARA RETIRAR LOS ELEMENTOS ABAJO DESCRITOS PARA EFECTUAR LA SIGUIENTE TAREA: </p>
+                    
+                </div>
+                    <input type="text" style=" width: 1260px; align-self: flex-end; *margin-left: 50PX; margin-top: 15px; " />
+            </div>
+        </form>
+        <div> 
+            <p:dataTable class="tabla" style="margin-top: 50px;" var="car" value="#{detalleprestamoController.obtenerDetalleprestamoPorPrestamo(prestamoController.selected.pkPrestamo)}">
+
+                <p:column headerText="Cantidad">
+                    <h:outputText value=" " />
+                </p:column>
+
+                <p:column headerText="Nombre del elemento">
+                    <h:outputText value="#{car.fkEquipo.nombre}" />
+                </p:column>
+
+              <p:column headerText="Número de serie">
+                  <h:outputText value="#{car.fkEquipo.serial}" />
+                </p:column>
+                
+                <p:column headerText="Número de inventario Sena">
+                    <h:outputText value="#{car.fkEquipo.placasena}" />
+                </p:column>
+                
+            </p:dataTable>
+<!--            <table border="1" style="margin-top: 50px;" >
+                <thead>
+                    <tr>
+                        <th>Cantidad</th>
+                        <th>Nombre del Elemento</th>
+                        <th>Numero Serie</th>
+                        <th>Numero Inventario Sena</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input value="0" class="tablava"/>
+                        </td>
+                        <td><input value="0" class="tablava"/></td>
+                        <td><input value="0" class="tablava"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>dsf</td>
+                        <td>sdf</td>
+                        <td>fsd</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>sdf</td>
+                        <td>fds</td>
+                        <td>sdf</td>
+                    </tr>
+                </tbody>
+            </table>-->
+        </div>
+        <div class="contenedor" id="CON">
+            <div class="columna1"> 
+                <p> FECHA DE SALIDA: <input type="text" value="#{prestamoController.selected.fechasalida}" /></p>
+                <p> FECHA DE REINGRESO: <input type="text"  value="#{prestamoController.selected.fechadevolucion}"/></p>
+                <p> NOMBRE DE QUIEN ENTREGA LOS ELEMENTOS: <input type="text"  /></p>
+            </div>
+            <div class="firma"> 
+                <p> FIRMA AUTORIZADA: <input type="text" /></p>
+            </div>
+        </div>
+        <div class="contenedor" style="margin-top: 30px;"> 
+            <div class="columna1" style="margin-right: 80px;" >
+                <input type="text" style="margin-right: 80px; width: 400px !important;"/>
+            </div>
+            <div class="columna2" style="margin-right: 80px;"> 
+                <input type="text" style="margin-right: 80px !important; width: 400px !important;"/>
+            </div>
+            <div class="columna3" style="margin-right: 80px;" >
+                <input type="text" style="width: 400px !important;  "/>
+            </div>
+        </div>
+        <button type="button" onclick="javascript:window.print()" style="margin-top: 60px;">Imprimir</button>
+    </body>
+</html>

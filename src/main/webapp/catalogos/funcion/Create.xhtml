@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateFuncionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputLabel class="msjObligatorios"
+                               value ="#{bundle.msjObligatorios}" /> 
+                <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="3">
+                   <h:outputLabel value="#{bundle.CreateFuncionLabel_nombre}" for="nombre" />
+                    <p:inputText id="nombre" value="#{funcionController.selected.nombre}"
+                                 title="#{bundle.CreateFuncionTitle_nombre}" required="true"
+                                 requiredMessage="#{bundle.CreateFuncionRequiredMessage_nombre}"
+                                 maxlength="30">
+                         <p:keyFilter regEx="/[A-Z Ñ]/i"/>
+                    </p:inputText>
+                                                            <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{funcionController.create}" value="#{bundle.CreateFuncionSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{funcionController.prepareList}" value="#{bundle.CreateFuncionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateFuncionIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

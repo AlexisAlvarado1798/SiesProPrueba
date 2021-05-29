@@ -1,0 +1,78 @@
+.presentacion{
+    border: 1px  solid  #000;
+    text-align: center;
+}
+input{
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom: 2px solid #000;
+    position: absolute;
+    width: 390px;
+    text-align: center;
+}
+.contenedor{
+    display: flex;
+    margin: auto;
+}
+.columna1{
+    position: relative;
+    
+}
+.columna2{
+    position: relative;
+    margin-left: 380px;
+}
+table{
+    position: relative;
+    width: 95%;
+    margin: 20px auto;
+}
+table head{
+    background-color: #000;
+    color: #fff;
+}
+ .logo{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 30px;
+    left: 10px;
+    background-image: url(../assets/sena.jpg);
+    background-repeat: no-repeat;
+    border: none;
+    background-size: 100%;
+    margin-right:  15px;
+}
+button{
+    border-radius: 5px;
+    height: 40px;
+    width: 100px;
+    background-color: #fff;
+    align-content: center;
+}
+.firma{
+    position: relative;
+    margin-left: 380px; 
+}
+.columna3{
+    position: relative;
+    margin-left: 380px;
+}
+.tablava{
+    border-bottom: none !important;
+    height: 12px;
+    width: 388px;
+}
+.tabla{
+    position: relative;
+    border: 2px solid #000;
+}
+button{
+    background: #6df973;
+    padding: 5px;
+    border-radius: 5px;
+}
+td{
+        border: 1px solid;
+}

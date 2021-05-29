@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateDefinitivaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+             <h:outputLabel class="msjObligatorios"
+                               value ="#{bundle.msjObligatorios}" /> 
+                <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{bundle.CreateDefinitivaLabel_codigo}" for="codigo" />
+                    <p:inputText id="codigo" value="#{definitivaController.selected.codigo}" title="#{bundle.CreateDefinitivaTitle_codigo}" 
+                                 required="true" requiredMessage="#{bundle.CreateDefinitivaRequiredMessage_codigo}"
+                                 maxlength="10">
+                         <p:keyFilter regEx="/[0-9A-Z]/i"/>
+                    </p:inputText>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    <h:outputLabel value="#{bundle.CreateDefinitivaLabel_descripcion}" for="descripcion" />
+                    <p:inputText id="descripcion" value="#{definitivaController.selected.descripcion}" 
+                                 title="#{bundle.CreateDefinitivaTitle_descripcion}" required="true"
+                                 requiredMessage="#{bundle.CreateDefinitivaRequiredMessage_descripcion}"/>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    
+                    
+                      <h:outputLabel value="#{bundle.CreateDefinitivaLabel_fecha}" for="fecha" />
+                      <p:calendar id="fecha"
+                                value="#{definitivaController.selected.fecha}" 
+                                locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                mindate="today();"/>
+                    
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    
+                    <h:outputLabel value="#{bundle.CreateDefinitivaLabel_fkEquipo}" for="fkEquipo" />
+                    <p:autoComplete id="fkEquipo" value="#{definitivaController.selected.fkEquipo}" 
+                                    completeMethod="#{equipoController.getEquipos}"
+                                    maxlength="10" minQueryLength="3" placeholder="nombre"
+                                     title="#{bundle.CreateSuministraTitle_fkEquipo}" required="true" 
+                                     requiredMessage="#{bundle.CreateSuministraRequiredMessage_fkEquipo}"
+                                     onkeypress="return validarAlfanumerico(event);"/>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{definitivaController.create}" value="#{bundle.CreateDefinitivaSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{definitivaController.prepareList}" value="#{bundle.CreateDefinitivaShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateDefinitivaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

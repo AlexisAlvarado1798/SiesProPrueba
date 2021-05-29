@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateEstadoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputLabel class="msjObligatorios" value ="#{bundle.msjObligatorios}" rendered="#{estadoController.items.rowCount == 0}"/>/> 
+
+                <p:dataTable id="tblestado" value="#{estadoController.items}" var="item" 
+                             widgetVar="carsTable" emptyMessage="#{bundle.noresultadosfiltro}"
+                             paginator="true" rows="5"
+                             paginatorTemplate="{CurrentPageReport}
+                             {FirstPageLink} {PreviousPageLink} {PageLinks}
+                             {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                             rowsPerPageTemplate="5, 10, 15">
+
+                    <f:facet name="{Exporters}">
+                        <div style="float: bottom; padding-top: 5px ">
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/xls.png" width="24"/>
+                                <p:dataExporter type="xls" target="tblestado"
+                                                pageOnly="true" fileName="estados"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/pdf.png" width="24"/>
+                                <p:dataExporter type="pdf" target="tblestado"
+                                                pageOnly="true" fileName="estados" preProcessor="#{personaController.preProcessPDF}"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/csv.png" width="24"/>
+                                <p:dataExporter type="csv" target="tblestado"
+                                                pageOnly="true" fileName="estados"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/xml.png" width="24"/>
+                                <p:dataExporter type="xml" target="tblestado"
+                                                pageOnly="true" fileName="estados"/>
+                            </h:commandLink>
+                        </div>
+                    </f:facet>
+
+                    <h:panelGrid columns="3">
+                        <h:outputLabel value="#{bundle.CreateEstadoLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{estadoController.selected.codigo}" title="#{bundle.CreateEstadoTitle_codigo}" 
+                                     required="true" requiredMessage="#{bundle.CreateEstadoRequiredMessage_codigo}"/>
+                        <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                        <h:outputLabel value="#{bundle.CreateEstadoLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{estadoController.selected.descripcion}" 
+                                     title="#{bundle.CreateEstadoTitle_descripcion}" required="true"
+                                     requiredMessage="#{bundle.CreateEstadoRequiredMessage_descripcion}"/>
+                        <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                </p:dataTable>
+
+                </h:panelGrid><h3>Exportar</h3>
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/xls.png"/>
+                    <p:dataExporter type="xls" target="tblestado"
+                                    fileName="estados"
+                                    preProcessor="#{personaController.preProcessPDF}"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/pdf.png"/>
+                    <p:dataExporter type="pdf" target="tblestado"
+                                    fileName="estados"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/csv.png"/>
+                    <p:dataExporter type="csv" target="tblestado"
+                                    fileName="estados"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/xml.png"/>
+                    <p:dataExporter type="xml" target="tblestado"
+                                    fileName="estados"/>
+                </h:commandLink>
+
+
+
+                <br />
+                <h:commandLink action="#{estadoController.create}" value="#{bundle.CreateEstadoSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{estadoController.prepareList}" value="#{bundle.CreateEstadoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateEstadoIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta charset="utf-8"/>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <link rel="shortcut icon"
+              href="#{request.contextPath}/resources/assets/Koala.png"/>
+        <script src="#{request.contextPath}/resources/js/jscript.js" type="text/javascript"></script>
+        <title>#{bundle.tituloApp}</title>
+        <meta http-equiv="Expires" content="0" />
+        <meta http-equiv="Pragma" content="no-cache" />
+    </h:head> 
+    <h:body onload="invalidarBtnAtras();">
+        <div id="top" class="left_content">
+            <ui:insert name="top">
+<!--                <img src="# {request.contextPath}/resources/assets/user.png" alt="" height="150" width="150"/> -->
+                <h:form>
+                    
+                    <p:menubar 
+                        binding="#{menuDinamicoController.model}" style="color: #fff !important; ">
+                        
+                        <f:facet name="options">
+                            <b><h:outputText
+                                    value="Bienvenido:
+                                    #{usuarioController.obtenerUsuarioLogueado().nombreusuario}"
+                                    style="color: #fff"/></b>
+
+                            <h:commandLink value=" || Men&uacute; principal"
+
+                                           action="#{usuarioController.obtenerRutaMenuPrincipal()}"
+                                           style="color: #fff !important; font-size: 10pt;
+                                           font-weight: bold"/>
+
+                            <h:commandLink value=" || Cerrar sesi&oacute;n"
+                                           action="#{usuarioController.cerrarSesion()}"
+                                           style="color: #fff; font-size: 10pt;
+                                           font-weight: bold"/>
+
+                        </f:facet>
+                    </p:menubar>
+                    
+                   
+                </h:form>
+
+            </ui:insert>
+        </div>
+        <div id="content" class="left_content">
+            <ui:insert name="content">
+            </ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom">
+                <div align="center">
+                    <img src="#{request.contextPath}/resources/assets/Koala.png" width="24" height="20" alt="Koala"/>
+                    Todos los derechos reservados - SIESS
+                    <img src="#{request.contextPath}/resources/assets/Koala.png" width="24" height="20" alt="Koala"/>
+                </div>
+            </ui:insert>
+        </div>
+
+    </h:body> 
+</html> 
+
+
+

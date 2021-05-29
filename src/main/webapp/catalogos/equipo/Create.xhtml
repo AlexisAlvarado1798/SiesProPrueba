@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateEquipoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:outputLabel class="msjObligatorios"
+                               value ="#{bundle.msjObligatorios}"/>
+                <p:separator> </p:separator>
+
+                <h:panelGrid columns="6">
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_nombre}" for="nombre" />
+                    <p:inputText id="nombre" value="#{equipoController.selected.nombre}" title="#{bundle.CreateEquipoTitle_nombre}" required="true"
+                                 requiredMessage="#{bundle.CreateEquipoRequiredMessage_nombre}"
+                                 maxlength="30">
+                         <p:keyFilter regEx="/[A-Z Ñ]/i"/>
+                    </p:inputText>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_serial}" for="serial" />
+                    <p:inputText id="serial" value="#{equipoController.selected.serial}" title="#{bundle.CreateEquipoTitle_serial}" required="true" 
+                                 requiredMessage="#{bundle.CreateEquipoRequiredMessage_serial}"
+                                 maxlength="20">
+                         <p:keyFilter regEx="/[0-9]/i"/>
+                    </p:inputText>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_modelo}" for="modelo" />
+                    <p:inputText id="modelo" value="#{equipoController.selected.modelo}" title="#{bundle.CreateEquipoTitle_modelo}" required="true" 
+                                 requiredMessage="#{bundle.CreateEquipoRequiredMessage_modelo}"
+                                 maxlength="30">
+                         <p:keyFilter regEx="/[A-Z0-9 Ñ]/i"/>
+                    </p:inputText>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_placasena}" for="placasena" />
+                    <p:inputText id="placasena" value="#{equipoController.selected.placasena}" title="#{bundle.CreateEquipoTitle_placasena}"
+                                 required="true" requiredMessage="#{bundle.CreateEquipoRequiredMessage_placasena}"
+                                 maxlength="20">
+                         <p:keyFilter regEx="/[0-9]/i"/>
+                    </p:inputText>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_numerocertificacion}" for="numerocertificacion" />
+
+                    <p:inputText id="numerocertificacion" value="#{equipoController.selected.numerocertificacion}" 
+                                 title="#{bundle.CreateEquipoTitle_numerocertificacion}"
+                                 required="true" requiredMessage="#{bundle.CreateEquipoRequiredMessage_numerocertificacion}"
+                                 maxlength="20">
+                         <p:keyFilter regEx="/[0-9]/i"/>
+                    </p:inputText>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_vidautilprevista}" for="vidautilprevista" />
+                    <p:inputText id="vidautilprevista" value="#{equipoController.selected.vidautilprevista}"
+                                 title="#{bundle.CreateEquipoTitle_vidautilprevista}" required="true"
+                                 requiredMessage="#{bundle.CreateEquipoRequiredMessage_vidautilprevista}"
+                                 maxlength="20">
+                         <p:keyFilter regEx="/[A-Z0-9 Ñ]/i"/>
+                    </p:inputText>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+
+                    <h:outputLabel value="#{bundle.CreateEquipoTitle_aniofabricacion}" for="aniofabricacion" />
+                    <p:calendar id="aniofabricacion" value="#{equipoController.selected.aniofabricacion}" 
+                                locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                maxdate="today();" readonlyInput="true"
+                                autocomplete="false"
+                                >
+                    <p:ajax event="blur" update="fechacompra"></p:ajax>
+                    </p:calendar>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_fechacompra}" for="fechacompra" />
+                    <p:calendar id="fechacompra"
+                                mindate="#{equipoController.selected.aniofabricacion}"
+                                value="#{equipoController.selected.fechacompra}" 
+                                locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                maxdate="today();"
+                        autocomplete="false"
+                                >
+                    <p:ajax event="blur" update="fechainiciooperacion"></p:ajax>
+                    </p:calendar>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_fechainiciooperacion}" for="fechainiciooperacion" />
+                    <p:calendar id="fechainiciooperacion" 
+                                mindate="#{equipoController.selected.fechacompra}"
+                                value="#{equipoController.selected.fechainiciooperacion}"
+                                title="#{bundle.CreateEquipoTitle_fechainiciooperacion}" 
+                                locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                maxdate="today();"
+                                autocomplete="false"
+                                >
+                    <p:ajax event="blur" update="fecharetiro"></p:ajax>
+                    </p:calendar>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_fecharetiro}" for="fecharetiro" />
+                    <p:calendar  id="fecharetiro"
+                                 mindate="#{equipoController.selected.fechainiciooperacion}"
+                                 value="#{equipoController.selected.fecharetiro}"
+                                 title="#{bundle.CreateEquipoTitle_fecharetiro}" 
+                                 locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                 />
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_fkFabricante}" for="fkFabricante" />
+                    <p:autoComplete id="fkFabricante" value="#{equipoController.selected.fkFabricante}" 
+                                    completeMethod="#{fabricanteController.getFabricantes}"
+                                    maxlength="10" minQueryLength="3" placeholder="nombre Fabricante"
+                                     title="#{bundle.CreateEquipoTitle_fkFabricante}" required="true" 
+                                     requiredMessage="#{bundle.CreateEquipoRequiredMessage_fkFabricante}"/>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEquipoLabel_fkFuncion}" for="fkFuncion" />
+                    <p:autoComplete id="fkFuncion" value="#{equipoController.selected.fkFuncion}"
+                                 title="#{bundle.CreateEquipoTitle_fkFuncion}" required="true"
+                                 completeMethod="#{funcionController.getFunciones}"
+                                    maxlength="10" minQueryLength="3" placeholder="nombre funcion"
+                                 requiredMessage="#{bundle.CreateFuncionRequiredMessage_nombre}"
+                                  onkeypress="return validarAlfanumerico(event);"/>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                        <!--
+                                        <h:outputLabel value="# {bundle.CreateEquipoLabel_fkFuncion}" for="fkFuncion" />
+                                        <p:selectOneMenu id="fkFuncion" value="# {equipoController.selected.fkFuncion}" title="# {bundle.CreateEquipoTitle_fkFuncion}" >
+                                            <f:selectItems value="# {funcionController.itemsAvailableSelectOne}"/>
+                                        </p:selectOneMenu>
+                                        <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    -->
+                    
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{equipoController.create}" value="#{bundle.CreateEquipoSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{equipoController.prepareList}" value="#{bundle.CreateEquipoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateEquipoIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

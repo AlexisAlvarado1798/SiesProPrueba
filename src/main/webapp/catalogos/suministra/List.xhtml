@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListSuministraTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListSuministraEmpty}" rendered="#{suministraController.items.rowCount == 0}"/>
+                <p:dataTable id="tblsuministra" value="#{suministraController.items}" var="item" 
+                             paginator="true" rows="5" emptyMessage="#{bundle.noresultadosfiltro}"
+                                 paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                 rowsPerPageTemplate="5, 10, 15">
+
+                            <f:facet name="{Exporters}">
+                        <div style="float: bottom; padding-top: 5px ">
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/xls.png" width="24"/>
+                                <p:dataExporter type="xls" target="tblsuministra"
+                                                pageOnly="true" fileName="suministras"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/pdf.png" width="24"/>
+                                <p:dataExporter type="pdf" target="tblsuministra"
+                                                pageOnly="true" fileName="suministras" preProcessor="#{personaController.preProcessPDF}"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/csv.png" width="24"/>
+                                <p:dataExporter type="csv" target="tblsuministra"
+                                                pageOnly="true" fileName="suministras"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/xml.png" width="24"/>
+                                <p:dataExporter type="xml" target="tblsuministra"
+                                                pageOnly="true" fileName="suministras"/>
+                            </h:commandLink>
+                        </div>
+                    </f:facet>
+                        
+                        <p:column headerText="#{bundle.ListSuministraTitle_fkEquipo}"
+                                  filterMatchMode="contains" filterBy="#{item.fkEquipo.nombre}">
+                            <h:outputText value="#{item.fkEquipo.nombre}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListSuministraTitle_fkProveedor}"
+                                  filterMatchMode="contains" filterBy="#{item.fkProveedor.nombrre}">
+                            <h:outputText value="#{item.fkProveedor.nombrre}"/>
+                        </p:column>
+                        <p:column exportable="false">
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink class="link"  action="#{suministraController.prepareView}" value="#{bundle.ListSuministraViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="link"  action="#{suministraController.prepareEdit}" value="#{bundle.ListSuministraEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="link"  action="#{suministraController.destroy}" value="#{bundle.ListSuministraDestroyLink}"/>
+                        </p:column>
+                    </p:dataTable>
+                      <h3>Exportar</h3>
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/xls.png"/>
+                    <p:dataExporter type="xls" target="tblsuministra"
+                                    fileName="suministras"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/pdf.png"/>
+                    <p:dataExporter type="pdf" target="tblsuministra"
+                                    fileName="suministras"
+                                    preProcessor="#{personaController.preProcessPDF}"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/csv.png"/>
+                    <p:dataExporter type="csv" target="tblsuministra"
+                                    fileName="suministras"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/xml.png"/>
+                    <p:dataExporter type="xml" target="tblsuministra"
+                                    fileName="suministras"/>
+                </h:commandLink>
+               
+                <br />
+                <h:commandLink action="#{suministraController.prepareCreate}" value="#{bundle.ListSuministraCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListSuministraIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

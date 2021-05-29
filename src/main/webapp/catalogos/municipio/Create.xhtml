@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateMunicipioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputLabel class="msjObligatorios"
+                               value ="#{bundle.msjObligatorios}" /> 
+                <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{bundle.CreateMunicipioLabel_codigo}" for="codigo" />
+                    <p:inputText id="codigo" value="#{municipioController.selected.codigo}"
+                                 title="#{bundle.CreateMunicipioTitle_codigo}" required="true"
+                                 requiredMessage="#{bundle.CreateMunicipioRequiredMessage_codigo}"
+                                 maxlength="10">
+                         <p:keyFilter regEx="/[A-Z0-9]/i"/>
+                    </p:inputText>
+                     <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    <h:outputLabel value="#{bundle.CreateMunicipioLabel_nombre}" for="nombre" />
+                    <p:inputText id="nombre" value="#{municipioController.selected.nombre}" 
+                                 title="#{bundle.CreateMunicipioTitle_nombre}" required="true" 
+                                 requiredMessage="#{bundle.CreateMunicipioRequiredMessage_nombre}"
+                                 maxlength="30">
+                         <p:keyFilter regEx="/[A-Z ]/i"/>
+                    </p:inputText>
+                     <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    <h:outputLabel value="#{bundle.CreateMunicipioLabel_fkDepartamento}" for="fkDepartamento" />
+                    <p:selectOneMenu id="fkDepartamento" value="#{municipioController.selected.fkDepartamento}" 
+                                     title="#{bundle.CreateMunicipioTitle_fkDepartamento}" >
+                        <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                     <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{municipioController.create}" value="#{bundle.CreateMunicipioSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{municipioController.prepareList}" value="#{bundle.CreateMunicipioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateMunicipioIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

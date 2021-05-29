@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPersonaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                   <h:outputLabel value="#{bundle.EditPersonaLabel_identificacion}" for="identificacion" />
+                    <h:inputText id="identificacion" value="#{personaController.selected.identificacion}" title="#{bundle.EditPersonaTitle_identificacion}" required="true" requiredMessage="#{bundle.EditPersonaRequiredMessage_identificacion}"/>
+                    <h:outputLabel value="#{bundle.EditPersonaLabel_nombres}" for="nombres" />
+                    <h:inputText id="nombres" value="#{personaController.selected.nombres}" title="#{bundle.EditPersonaTitle_nombres}" required="true" requiredMessage="#{bundle.EditPersonaRequiredMessage_nombres}"/>
+                    <h:outputLabel value="#{bundle.EditPersonaLabel_apellidos}" for="apellidos" />
+                    <h:inputText id="apellidos" value="#{personaController.selected.apellidos}" title="#{bundle.EditPersonaTitle_apellidos}" required="true" requiredMessage="#{bundle.EditPersonaRequiredMessage_apellidos}"/>
+                    <h:outputLabel value="#{bundle.EditPersonaLabel_direccion}" for="direccion" />
+                    <h:inputText id="direccion" value="#{personaController.selected.direccion}" title="#{bundle.EditPersonaTitle_direccion}" />
+                    <h:outputLabel value="#{bundle.EditPersonaLabel_correo}" for="correo" />
+                    <h:inputText id="correo" value="#{personaController.selected.correo}" title="#{bundle.EditPersonaTitle_correo}" required="true" requiredMessage="#{bundle.EditPersonaRequiredMessage_correo}"/>
+                    <h:outputLabel value="#{bundle.EditPersonaLabel_fkMunicipioorigen}" for="fkMunicipioorigen" />
+                    <h:selectOneMenu id="fkMunicipioorigen" value="#{personaController.selected.fkMunicipioorigen}" title="#{bundle.EditPersonaTitle_fkMunicipioorigen}" required="true" requiredMessage="#{bundle.EditPersonaRequiredMessage_fkMunicipioorigen}">
+                        <f:selectItems value="#{municipioController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditPersonaLabel_fkTipoidentificacion}" for="fkTipoidentificacion" />
+                    <h:selectOneMenu id="fkTipoidentificacion" value="#{personaController.selected.fkTipoidentificacion}" title="#{bundle.EditPersonaTitle_fkTipoidentificacion}" required="true" requiredMessage="#{bundle.EditPersonaRequiredMessage_fkTipoidentificacion}">
+                        <f:selectItems value="#{tipoidentificacionController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{personaController.update}" value="#{bundle.EditPersonaSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditPersonaViewLink}"/>
+                <br></br>
+                <br />
+                <h:commandLink action="#{personaController.prepareList}" value="#{bundle.EditPersonaShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditPersonaIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

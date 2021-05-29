@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewMantenimientoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewMantenimientoLabel_codigo}"/>
+                    <h:outputText value="#{mantenimientoController.selected.codigo}" title="#{bundle.ViewMantenimientoTitle_codigo}"/>
+                    <h:outputText value="#{bundle.ViewMantenimientoLabel_fechainspeccion}"/>
+                    <h:outputText value="#{mantenimientoController.selected.fechainspeccion}" title="#{bundle.ViewMantenimientoTitle_fechainspeccion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewMantenimientoLabel_observacion}"/>
+                    <h:outputText value="#{mantenimientoController.selected.observacion}" title="#{bundle.ViewMantenimientoTitle_observacion}"/>
+                    <h:outputText value="#{bundle.ViewMantenimientoLabel_fkEquipo}"/>
+                    <h:outputText value="#{mantenimientoController.selected.fkEquipo}" title="#{bundle.ViewMantenimientoTitle_fkEquipo}"/>
+                    <h:outputText value="#{bundle.ViewMantenimientoLabel_fkPersona}"/>
+                    <h:outputText value="#{mantenimientoController.selected.fkPersona}" title="#{bundle.ViewMantenimientoTitle_fkPersona}"/>
+                    <h:outputText value="#{bundle.ViewMantenimientoLabel_fkTipomantenimiento}"/>
+                    <h:outputText value="#{mantenimientoController.selected.fkTipomantenimiento}" title="#{bundle.ViewMantenimientoTitle_fkTipomantenimiento}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{mantenimientoController.destroyAndView}" value="#{bundle.ViewMantenimientoDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewMantenimientoEditLink}"/>
+                <br />
+                <h:commandLink action="#{mantenimientoController.prepareCreate}" value="#{bundle.ViewMantenimientoCreateLink}" />
+                <br />
+                <h:commandLink action="#{mantenimientoController.prepareList}" value="#{bundle.ViewMantenimientoShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewMantenimientoIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

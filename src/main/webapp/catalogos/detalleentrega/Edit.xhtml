@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditDetalleentregaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                     <h:outputLabel value="#{bundle.EditDetalleentregaLabel_observacion}" for="observacion" />
+                    <h:inputText id="observacion" value="#{detalleentregaController.selected.observacion}" title="#{bundle.EditDetalleentregaTitle_observacion}" />
+                    <h:outputLabel value="#{bundle.EditDetalleentregaLabel_fkEntrega}" for="fkEntrega" />
+                    <h:selectOneMenu id="fkEntrega" value="#{detalleentregaController.selected.fkEntrega}" title="#{bundle.EditDetalleentregaTitle_fkEntrega}" required="true" requiredMessage="#{bundle.EditDetalleentregaRequiredMessage_fkEntrega}">
+                        <f:selectItems value="#{entregaController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditDetalleentregaLabel_fkEquipo}" for="fkEquipo" />
+                    <h:selectOneMenu id="fkEquipo" value="#{detalleentregaController.selected.fkEquipo}" title="#{bundle.EditDetalleentregaTitle_fkEquipo}" required="true" requiredMessage="#{bundle.EditDetalleentregaRequiredMessage_fkEquipo}">
+                        <f:selectItems value="#{equipoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{detalleentregaController.update}" value="#{bundle.EditDetalleentregaSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditDetalleentregaViewLink}"/>
+                <br />
+                <h:commandLink action="#{detalleentregaController.prepareList}" value="#{bundle.EditDetalleentregaShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditDetalleentregaIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

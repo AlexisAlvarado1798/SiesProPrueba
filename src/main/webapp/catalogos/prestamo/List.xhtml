@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListPrestamoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListPrestamoEmpty}" rendered="#{prestamoController.items.rowCount == 0}"/>
+
+                <p:dataTable id="tblPrestamo" value="#{prestamoController.items}" var="item" 
+                             paginator="true" rows="5" emptyMessage="#{bundle.noresultadosfiltro}"
+                             paginatorTemplate="{CurrentPageReport}
+                             {FirstPageLink} {PreviousPageLink} {PageLinks}
+                             {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                             rowsPerPageTemplate="5, 10, 15">
+
+                    <f:facet name="{Exporters}">
+                        <div style="float: bottom; padding-top: 5px ">
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/xls.png" width="24"/>
+                                <p:dataExporter type="xls" target="tblPrestamo"
+                                                pageOnly="true" fileName="prestamos"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/pdf.png" width="24"/>
+                                <p:dataExporter type="pdf" target="tblPrestamo"
+                                                pageOnly="true" fileName="prestamos" preProcessor="#{personaController.preProcessPDF}"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/csv.png" width="24"/>
+                                <p:dataExporter type="csv" target="tblPrestamo"
+                                                pageOnly="true" fileName="prestamos"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/xml.png" width="24"/>
+                                <p:dataExporter type="xml" target="tblPrestamo"
+                                                pageOnly="true" fileName="prestamos"/>
+                            </h:commandLink>
+                        </div>
+                    </f:facet>
+                    <p:column style="width:16px">
+                        <p:rowToggler />
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListPrestamoTitle_codigo}" filterMatchMode="contains" 
+                              filterBy="#{item.codigo}" >
+                        <h:outputText value="#{item.codigo}"/>
+                    </p:column>
+
+
+                    <p:column headerText="#{bundle.ListPrestamoTitle_fechasolicitud}">
+                        <h:outputText value="#{item.fechasolicitud}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListPrestamoTitle_fechasalida}">
+                        <h:outputText value="#{item.fechasalida}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column headerText="#{bundle.ListPrestamoTitle_fechadevolucion}">
+                        <h:outputText value="#{item.fechadevolucion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListPrestamoTitle_estado}">
+
+                        <h:outputText value="#{item.estado == 0 ? 'En Espera' :( item.estado == 1 ? 'Rechazada' : 'Aceptada') }"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListPrestamoTitle_fkFicha}" filterMatchMode="contains" filterBy="#{item.fkFicha.codigo}">
+                        <h:outputText value="#{item.fkFicha.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListPrestamoTitle_fkMunicipio}">
+                        <h:outputText value="#{item.fkMunicipio.nombre} - #{item.fkMunicipio.fkDepartamento.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListPrestamoTitle_fkResponsable}" filterMatchMode="contains" filterBy="#{item.fkResponsable.nombres}">
+                        <h:outputText value="#{item.fkResponsable.nombres} - #{item.fkResponsable.apellidos}"/>
+                    </p:column>
+
+                    <p:rowExpansion>
+                        <p:panelGrid  columns="1" columnClasses="label,value" style="width:300px">
+                            <f:facet name="header">
+                                Equipos de este prestamo
+                            </f:facet>
+
+                            <p:dataTable value="#{detalleprestamoController.obtenerDetalleprestamoPorPrestamo(item.pkPrestamo)}" var="dp" >
+
+                                <p:column filterMatchMode="contains" filterBy="#{dp.fkEquipo.nombre}">
+                                    <h:outputText value="#{dp.fkEquipo.nombre}"/> </p:column>
+
+                            </p:dataTable>
+
+                        </p:panelGrid>
+                    </p:rowExpansion>
+
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListDetalleprestamoTitle_descripicion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descripicion}"/>
+                    </h:column>
+
+                    <p:column exportable="false">
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink class="link"  action="#{prestamoController.prepareView}" value="#{bundle.ListPrestamoViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink class="link"  rendered="#{usuarioController.obtenerUsuarioLogueado().tipousuarioenum == 0}" action="#{prestamoController.prepareEdit}" value="#{bundle.ListPrestamoEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink class="link"  rendered="#{usuarioController.obtenerUsuarioLogueado().tipousuarioenum == 0}" action="#{prestamoController.destroy}" value="#{bundle.ListPrestamoDestroyLink}"/>
+                    </p:column>
+                </p:dataTable>
+                <h3>Exportar</h3>
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/xls.png"/>
+                    <p:dataExporter type="xls" target="tblPrestamo"
+                                    fileName="prestamos"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/pdf.png"/>
+                    <p:dataExporter type="pdf" target="tblPrestamo"
+                                    fileName="prestamos"
+                                    preProcessor="#{personaController.preProcessPDF}"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/csv.png"/>
+                    <p:dataExporter type="csv" target="tblPrestamo"
+                                    fileName="prestamos"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/xml.png"/>
+                    <p:dataExporter type="xml" target="tblPrestamo"
+                                    fileName="prestamos"/>
+                </h:commandLink>
+
+<br></br>
+
+                <br />
+                <h:commandLink action="#{prestamoController.prepareCreate}" value="#{bundle.ListPrestamoCreateLink}" class="commandLink"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListPrestamoIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

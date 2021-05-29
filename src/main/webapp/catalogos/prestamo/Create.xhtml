@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreatePrestamoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+
+            <h:outputLabel class="msjObligatorios"
+                           value ="#{bundle.msjObligatorios}" /> 
+            <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="3">
+
+
+                    <h:outputLabel value="#{bundle.CreatePrestamoLabel_fkFicha}" for="fkFicha" />
+                    <p:selectOneMenu id="fkFicha" value="#{prestamoController.selected.fkFicha}"  
+                                     title="#{bundle.CreatePrestamoTitle_fkFicha}" required="true" 
+                                     requiredMessage="#{bundle.CreatePrestamoRequiredMessage_fkFicha}" >
+                        <f:selectItems value="#{fichaController.itemsAvailableSelectOne}"/>
+                        <p:ajax  update="programa" />
+                    </p:selectOneMenu>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    
+                    
+                    
+                     <h:outputLabel value="Programa: " for="programa" />
+                     <h:outputLabel id="programa" value="#{prestamoController.selected.fkFicha.fkProgramaformacion.nombre}"
+                                     ></h:outputLabel> 
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    
+                    
+                    <h:outputLabel value="#{bundle.CreatePrestamoLabel_fkResponsable}" for="fkResponsable" />
+
+                    <p:autoComplete id="fkResponsable"
+                                    value="#{prestamoController.selected.fkResponsable}"
+                                    completeMethod="#{personaController.completeTexto}"
+                                    maxlength="10" minQueryLength="3" placeholder="identificacion o nombres"
+                                    requiredMessage="#{bundle.CreatePrestamoRequiredMessage_fkResponsable}"
+                                    onkeypress="return validarAlfanumerico(event);"/>                                    
+
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+
+                    <h:outputLabel value="#{bundle.CreatePrestamoLabel_fechasolicitud}" 
+                                   for="fechasolicitud" />
+                    <p:inputText id="fechasolicitud"
+                                 value="#{prestamoController.selected.fechasolicitud}" 
+                                 readonly="true"
+                                 />
+
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:fieldset legend="Fechas" style="margin-bottom:20px">
+                        <h:panelGrid columns="2" cellpadding="5">
+
+
+                            <p:column>
+                                Fecha Salida: 
+                                <p:calendar id="fechasalida"
+                                            value="#{prestamoController.selected.fechasalida}" 
+                                            locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                            mindate="today();" readonlyInput="true" autocomplete="false">
+                                    <p:ajax event="blur" update="fechadevolucion"></p:ajax>
+                                </p:calendar>
+                                Fecha Devolución:
+
+                                <p:calendar id="fechadevolucion" 
+                                            mindate="#{prestamoController.selected.fechasalida}"
+                                            value="#{prestamoController.selected.fechadevolucion}" 
+                                            locale="es" navigator ="true" pattern="dd/MM/yyyy" />
+
+                            </p:column>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+
+
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="Departamento: " for ="pais"/>
+
+                    <p:selectOneMenu id="depto"
+                                     value="#{personaController.departamento}" style="width:  150px">
+                        <p:ajax 
+                            listener="#{ubicacionGeograficaController.onDepartamentChange
+                                        (personaController.departamento)}" update="municipio" />
+                        <f:selectItem itemLabel="#{bundle.CreatePersonaLabel_fkDepartamentoorigen}"
+                                      itemValue="" noSelectionOption="true"/>
+                        <f:selectItems
+                            value="#{ubicacionGeograficaController.departamentos}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <p:outputLabel for="municipio"
+                                   value="#{bundle.CreatePrestamoLabel_fkMunicipio}" />
+
+                    <p:selectOneMenu id="municipio" 
+                                     value="#{prestamoController.selected.fkMunicipio}" 
+                                     required="true" 
+                                     requiredMessage="#{bundle.CreatePersonaRequiredMessage_fkMunicipioorigen}"
+                                     style="width: 150px">
+                        <f:selectItem itemLabel="Seleccione un municipio"
+                                      itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{ubicacionGeograficaController.municipios}" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+
+                    <h:outputLabel value="#{bundle.CreateDetalleprestamoLabel_descripicion}" for="descripicion" />
+
+
+                    <p:inputTextarea id="descripicion" value="#{prestamoController.selected.observacion}" 
+                                     title="#{bundle.CreateDetalleprestamoTitle_descripicion}" required="false" 
+                                     maxlength="1000" rows="5" cols="30"
+                                     counterTemplate="{0} characters remaining." autoResize="false"  />
+
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreatePrestamoLabel_fkEquipo}" for="pickList" />
+
+                      <p:pickList id="pickList" value="#{prestamoController.equipos}" 
+                                var="equipos"  
+                                required="true"
+                                itemLabel="#{equipos}" 
+                                itemValue="#{equipos}"
+                                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" showCheckbox="true">
+
+                        <f:facet name="sourceCaption">Disponibles</f:facet>
+                        <f:facet name="targetCaption">Para el prestamo</f:facet>
+                        
+                    </p:pickList>
+
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                </h:panelGrid>
+                <br />
+                <h:commandLink  action="#{prestamoController.create}" value="#{bundle.CreatePrestamoSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink  action="#{prestamoController.prepareList}" value="#{bundle.CreatePrestamoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link  outcome="/index" value="#{bundle.CreatePrestamoIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

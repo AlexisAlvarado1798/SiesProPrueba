@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateEstadousuarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputLabel class="msjObligatorios"
+                           value ="#{bundle.msjObligatorios}" /> 
+            <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="3">
+                    
+                    <h:outputLabel value="#{bundle.CreateEstadousuarioLabel_fechainicio}" for="fechainicio" />
+                    <p:calendar id="fechainicio"
+                                value="#{bundle.CreateEstadousuarioLabel_fechainicio}"
+                                locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                maxdate="today();"/>
+
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    
+
+                     <h:outputLabel value="#{bundle.CreateEstadousuarioLabel_fechafin}" for="fechafin" />
+                    <p:calendar id="fechafin"
+                                value="#{estadousuarioController.selected.fechafin}" 
+                                locale="es" navigator ="true" pattern="dd/MM/yyyy"
+                                maxdate="today();"/>
+
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+
+                    <h:outputLabel value="#{bundle.CreateEstadousuarioLabel_fkEstado}" for="fkEstado" />
+                    <p:selectOneMenu id="fkEstado" value="#{estadousuarioController.selected.fkEstado}" title="#{bundle.CreateEstadousuarioTitle_fkEstado}" required="true" requiredMessage="#{bundle.CreateEstadousuarioRequiredMessage_fkEstado}">
+                        <f:selectItems value="#{estadoController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateEstadousuarioLabel_fkUsuario}" for="fkUsuario" />
+                    <p:selectOneMenu id="fkUsuario" value="#{estadousuarioController.selected.fkUsuario}" title="#{bundle.CreateEstadousuarioTitle_fkUsuario}" required="true" requiredMessage="#{bundle.CreateEstadousuarioRequiredMessage_fkUsuario}">
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{estadousuarioController.create}" value="#{bundle.CreateEstadousuarioSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{estadousuarioController.prepareList}" value="#{bundle.CreateEstadousuarioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateEstadousuarioIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateAccionpermitidaporusuarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+             <h:outputLabel class="msjObligatorios"
+                               value ="#{bundle.msjObligatorios}" /> 
+                <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{bundle.CreateAccionpermitidaporusuarioLabel_fkAccionpermitida}" for="fkAccionpermitida" />
+                    <p:selectOneMenu id="fkAccionpermitida" value="#{accionpermitidaporusuarioController.selected.fkAccionpermitida}" title="#{bundle.CreateAccionpermitidaporusuarioTitle_fkAccionpermitida}" required="true" requiredMessage="#{bundle.CreateAccionpermitidaporusuarioRequiredMessage_fkAccionpermitida}">
+                        <f:selectItems value="#{accionpermitidaController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    <h:outputLabel value="#{bundle.CreateAccionpermitidaporusuarioLabel_fkUsuario}" for="fkUsuario" />
+                    <p:selectOneMenu id="fkUsuario" value="#{accionpermitidaporusuarioController.selected.fkUsuario}" title="#{bundle.CreateAccionpermitidaporusuarioTitle_fkUsuario}" required="true" requiredMessage="#{bundle.CreateAccionpermitidaporusuarioRequiredMessage_fkUsuario}">
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{accionpermitidaporusuarioController.create}" value="#{bundle.CreateAccionpermitidaporusuarioSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{accionpermitidaporusuarioController.prepareList}" value="#{bundle.CreateAccionpermitidaporusuarioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateAccionpermitidaporusuarioIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

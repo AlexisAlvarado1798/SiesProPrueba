@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateDetalleprestamoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputLabel class="msjObligatorios"
+                           value ="#{bundle.msjObligatorios}" /> 
+            <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{bundle.CreateDetalleprestamoLabel_fkEquipo}" for="fkEquipo" />
+                    <p:selectOneMenu id="fkEquipo" value="#{detalleprestamoController.selected.fkEquipo}" 
+                                     title="#{bundle.CreateDetalleprestamoTitle_fkEquipo}" required="true"
+                                     requiredMessage="#{bundle.CreateDetalleprestamoRequiredMessage_fkEquipo}">
+                        <f:selectItems value="#{equipoController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel>
+                    
+                    <h:outputLabel value="#{bundle.CreateDetalleprestamoLabel_fkPrestamo}" for="fkPrestamo" />
+                    <p:selectOneMenu id="fkPrestamo" value="#{detalleprestamoController.selected.fkPrestamo}"
+                                     title="#{bundle.CreateDetalleprestamoTitle_fkPrestamo}" required="true" 
+                                     requiredMessage="#{bundle.CreateDetalleprestamoRequiredMessage_fkPrestamo}">
+                        <f:selectItems value="#{prestamoController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                     <h:outputLabel value="*" class="asterisco"> </h:outputLabel>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{detalleprestamoController.create}" value="#{bundle.CreateDetalleprestamoSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{detalleprestamoController.prepareList}" value="#{bundle.CreateDetalleprestamoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateDetalleprestamoIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

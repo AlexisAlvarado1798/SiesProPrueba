@@ -1,0 +1,118 @@
+#top {
+    position: relative;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+
+#bottom {
+    position: relative;
+    background-color: rgba(76, 175, 80, 0.59);
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.left_content {
+    background-color: rgba(249,249,249,.75);
+    padding: 5px;
+    margin-left: 0px !important;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+
+#top a:link:hover, #top a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+.ui-menu, .ui-menu .ui-menu-child {
+    background: #4CAF50;
+    border: none;
+}
+.login{
+    text-align: center;
+    background-color: #c7c6c6de;
+}
+.bttnA:hover{
+    color: black;
+    background-color: greenyellow;
+}
+.bttnc:hover{
+    color: black;
+    background-color: red;
+}
+input{
+    text-align: center;
+}
+#myCarousel{
+    margin: 0px;
+    padding: 0px;
+    width: 600px;
+    margin-left: 30%;
+}
+
+.ui-widget-header{
+    /*background-color: red !important;*/
+}
+
+#content{
+    display: block;
+    position: relative;
+    margin: auto !important;
+    width: 600px;
+    width: 1200px;
+    background-color :#4caf5040 !important;
+}
+
+input{
+    position: relative;
+    display: block;
+    /*width: 100%;*/
+
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    background: #6df973 -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0.25)),to(rgba(0,0,0,0)));
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+background: #3cd642 -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0.6)),to(rgba(255,255,255,0))); 
+}
+.ui-menu .ui-menuitem-text {
+    float: left;
+    color: #f7f7f7;
+}
+textarea{
+    width: 500px;
+    background-color: #fff;
+}

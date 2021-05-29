@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListEquipoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form styleClass="jsfcrud_list_form">               
+
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListEquipoEmpty}" rendered="#{equipoController.items.rowCount == 0}"/>
+               
+                    <p:dataTable id="tblequipo" value="#{equipoController.items}" var="item" 
+                                 widgetVar="carsTable" emptyMessage="#{bundle.noresultadosfiltro}"
+                                 paginator="true" rows="5"
+                                 paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                 rowsPerPageTemplate="5, 10, 15">
+
+                        <f:facet name="{Exporters}">
+                            <div style="float: bottom; padding-top: 5px ">
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/xls.png" width="24"/>
+                                    <p:dataExporter type="xls" target="tblequipo"
+                                                    pageOnly="true" fileName="equipos"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/pdf.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="tblequipo"
+                                                    pageOnly="true" fileName="equipos" preProcessor="#{personaController.preProcessPDF}"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/csv.png" width="24"/>
+                                    <p:dataExporter type="csv" target="tblequipo"
+                                                    pageOnly="true" fileName="equipos"/>
+                                </h:commandLink>
+
+                                <h:commandLink class="a">
+                                    <p:graphicImage name="/assets/xml.png" width="24"/>
+                                    <p:dataExporter type="xml" target="tblequipo"
+                                                    pageOnly="true" fileName="equipos"/>
+                                </h:commandLink>
+                            </div>
+                        </f:facet>
+
+                        <p:column
+                            headerText = "#{bundle.ListEquipoTitle_nombre}"
+                            sortBy = "#{item.nombre}">
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+
+
+                        <p:column 
+                            headerText ="#{bundle.ListEquipoTitle_serial}"
+                            sortBy = "#{item.serial}"
+                            filterMatchMode="contains"
+                            filterBy="#{item.serial}">
+                            <h:outputText value="#{item.serial}"/>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_modelo}">
+                            <h:outputText value="#{item.modelo}"/>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_placasena}"
+                                  filterMatchMode = "contains"
+                                  filterBy = "#{item.placasena}">
+                            <h:outputText value="#{item.placasena}"/>
+                        </p:column>
+
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_numerocertificacion}">
+                            <h:outputText value="#{item.numerocertificacion}"/>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_vidautilprevista}">
+                            <h:outputText value="#{item.vidautilprevista}"/>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_aniofabricacion}">
+                            <h:outputText value="#{item.aniofabricacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy " />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_fechacompra}">
+                            <h:outputText value="#{item.fechacompra}">
+                                <f:convertDateTime pattern="MM/dd/yyyy " />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_fechainiciooperacion}">
+                            <h:outputText value="#{item.fechainiciooperacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy " />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_fecharetiro}">
+                            <h:outputText value="#{item.fecharetiro}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_fkFabricante}"
+                                  sortBy = "#{item.fabricante}"
+                                  filterMatchMode="contains"
+                                  filterBy="#{item.fkFabricante.nombre}">
+                            <h:outputText value="#{item.fkFabricante.nombre}"/>
+                        </p:column>
+
+
+                        <p:column headerText="#{bundle.ListEquipoTitle_fkFuncion}"
+                                  filterBy="#{item.fkFuncion}" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('carsTable').filter()" styleClass="custom-filter" >
+                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{funcionController.itemsAvailableSelectOne}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{item.fkFuncion.nombre}"/>
+                        </p:column>
+
+                        <p:column exportable="false">
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink class="link"  action="#{equipoController.prepareView}" value="#{bundle.ListEquipoViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="link"  action="#{equipoController.prepareEdit}" value="#{bundle.ListEquipoEditLink}"/>
+                            <h:outputText value=" "/>
+                            <p:commandLink class="link"  action="#{equipoController.destroy}"  update="tblequipo" value="#{bundle.ListEquipoDestroyLink}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                    <h3>Exportar</h3>
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/xls.png"/>
+                        <p:dataExporter type="xls" target="tblequipo"
+                                        fileName="equipos"
+                                        preProcessor="#{personaController.preProcessPDF}"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/pdf.png"/>
+                        <p:dataExporter type="pdf" target="tblequipo"
+                                        fileName="equipos"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/csv.png"/>
+                        <p:dataExporter type="csv" target="tblequipo"
+                                        fileName="equipos"/>
+                    </h:commandLink>
+
+                    <h:commandLink class="a">
+                        <p:graphicImage name="/assets/xml.png"/>
+                        <p:dataExporter type="xml" target="tblequipo"
+                                        fileName="equipos"/>
+                    </h:commandLink>
+
+                
+                <br />
+                <h:commandLink action="#{equipoController.prepareCreate}" value="#{bundle.ListEquipoCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListEquipoIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

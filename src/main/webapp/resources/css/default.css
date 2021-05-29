@@ -1,0 +1,174 @@
+body {
+    background-color: #ffffff;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;  
+    margin: 10px;
+     /*background: url(./assets/fondo.jpg);*/
+     background-repeat: no-repeat;
+     background-size: 100%;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF;
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+a:link, a:visited {
+  font-weight : bold;
+  text-decoration: none;
+  border: 1px solid #4caf50;
+  padding: 5px;
+  background-color: #4caf50;
+  margin-top: 5px;
+  border-radius: 5px;
+  color: white ;
+}
+
+a:link:hover, a:visited:hover  {
+  color: #000;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+/*Clase utilizada en las vistas para poner un asterisco (*) indicando que el campo es obligatorio */
+.asterisco{
+    font-size: 12pt;
+    vertical-align: middle;
+    font-weight: bold;
+    color: #e33b06;
+}
+
+/*Clase utilizada para dar instrucciones al usuario que determinados campos son obligatorios*/
+.msjObligatorios{
+    font-size: 12pt;    
+    color: #e33b06;
+    display: block;
+    margin-top: 20px;
+}
+
+.cc{
+    background-color: #ceefa0 !important;
+    background-image: none !important;
+    color: #000000 !important;
+}
+
+#fondo1 {
+    background-repeat: no-repeat;
+    width: 100%;
+}
+input{
+    text-align: center;
+}
+.bttnA:hover{
+    color: black;
+    background-color: greenyellow;
+}
+.bttnc:hover{
+    color: black;
+    background-color: red;
+}
+.login{
+   text-align: center;
+ 
+   background-color: #a8a8a8;
+   *background-color: transparent;
+} .ui-datatable .ui-datatable-header {
+                                text-align: left !important;
+                            }
+
+                            .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+                                display: none;
+                            }
+                           
+                           
+       #tblequipo{
+    border-collapse: collapse;
+    width: 50%!important;
+    table-layout: fixed;}      
+        .value {
+        font-weight: bold;
+    }
+     
+    .ui-datatable {
+        margin-bottom: 25px
+    }
+     
+    .ui-datatable .ui-datatable-footer {
+        text-align:left;
+    }
+     
+    .ui-datalist ul {
+        padding: 0 0 0 10px;
+        margin: 5px 0;
+    }
+     
+    .ui-datatable .ui-button-icon-only .ui-button-text {
+        padding: 0;
+        line-height: 1.2;
+    }
+   
+    body .ui-picklist .ui-picklist-caption {
+    background-color: #f4f4f4;
+    border: 1px solid #c8c8c8;
+    color: #333333;
+    padding: 0.571em 1em 0.571em 1em;
+    border-bottom: 0 none;
+    font-weight: 700;
+}
+body .ui-picklist .ui-picklist-filter-container .ui-picklist-filter {
+    padding: 0.429em;
+    width: 100%;
+    text-indent: 1.429em;
+    margin-bottom: 0.429em;
+}
+body .ui-picklist .ui-picklist-list .ui-picklist-item {
+    padding: 0.429em 0.857em;
+    border: 0 none;
+    margin: 0;
+    color: #000;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+.a{
+  background-color: transparent !important;
+  border: none !important;
+}
+.ui-datepicker .ui-datepicker-calendar .ui-state-default {
+    background: 0;
+    border: 0;
+    color: #000000 !important;
+}
+.link{
+    font-weight: bold !important;
+    text-decoration: none !important;
+    border: 1px solid #d4e3f7 !important ;
+    padding: 0px !important;
+    background-color: #025ad02b !important;
+    margin-top: 5px !important;
+    border-radius: 5px !important;
+    color: #313131 !important;
+}
+.carousel-control.left {
+  background: #0000003d !important;
+  border: none;
+}
+.carousel-control.right {
+  background: #201c174d !important;
+  border: none;
+}
+footer{
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    display: block;
+   font-size: 25px;
+   padding: 20px;
+   margin-bottom: 10px;
+}

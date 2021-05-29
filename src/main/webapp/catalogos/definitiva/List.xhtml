@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListDefinitivaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListDefinitivaEmpty}" rendered="#{definitivaController.items.rowCount == 0}"/>
+                <p:dataTable id="tbldefinitiva" value="#{definitivaController.items}" var="item"
+                             paginator="true" rows="5" emptyMessage="#{bundle.noresultadosfiltro}"
+                                 widgetVar="carsTable"
+                                 paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                 rowsPerPageTemplate="5, 10, 15">
+                        
+                            <f:facet name="{Exporters}">
+                        <div style="float: bottom; padding-top: 5px ">
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/xls.png" width="24"/>
+                                <p:dataExporter type="xls" target="tbldefinitiva"
+                                                pageOnly="true" fileName="definitivas"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/pdf.png" width="24"/>
+                                <p:dataExporter type="pdf" target="tbldefinitiva"
+                                                pageOnly="true" fileName="definitivas" preProcessor="#{personaController.preProcessPDF}"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/csv.png" width="24"/>
+                                <p:dataExporter type="csv" target="tbldefinitiva"
+                                                pageOnly="true" fileName="definitivas"/>
+                            </h:commandLink>
+
+                            <h:commandLink class="a">
+                                <p:graphicImage name="/assets/xml.png" width="24"/>
+                                <p:dataExporter type="xml" target="tbldefinitiva"
+                                                pageOnly="true" fileName="definitivas"/>
+                            </h:commandLink>
+                        </div>
+                    </f:facet>
+                       
+                        <p:column headerText="#{bundle.ListDefinitivaTitle_codigo}">
+                            <h:outputText value="#{item.codigo}"/>
+                        </p:column>
+                        
+                        <p:column headerText="#{bundle.ListDefinitivaTitle_descripcion}">
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        
+                        <p:column headerText="#{bundle.ListDefinitivaTitle_fecha}"
+                                  sortBy="#{item.fecha}"
+                                  filterMatchMode="contains" filterBy="#{item.fecha}">
+                            <h:outputText value="#{item.fecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy " />
+                            </h:outputText>
+                        </p:column>
+                        
+                        <p:column headerText = "#{bundle.ListDefinitivaTitle_fkEquipo}"
+                            
+                             filterBy="#{item.fkEquipo}" filterMatchMode="exact">
+                         <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('carsTable').filter()" styleClass="custom-filter" >
+                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{equipoController.itemsAvailableSelectOne}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                             <h:outputText value="#{item.fkEquipo.nombre}"/>
+                        </p:column>
+                        
+                        <p:column exportable="false">
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink  class="link" action="#{definitivaController.prepareView}" value="#{bundle.ListDefinitivaViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink  class="link" action="#{definitivaController.prepareEdit}" value="#{bundle.ListDefinitivaEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="link"  action="#{definitivaController.destroy}" value="#{bundle.ListDefinitivaDestroyLink}"/>
+                        </p:column>
+                    </p:dataTable>
+                      <h3>Exportar</h3>
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/xls.png"/>
+                    <p:dataExporter type="xls" target="tbldefinitiva"
+                                    fileName="definitivas"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/pdf.png"/>
+                    <p:dataExporter type="pdf" target="tbldefinitiva"
+                                    fileName="definitivas"
+                                    preProcessor="#{personaController.preProcessPDF}"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/csv.png"/>
+                    <p:dataExporter type="csv" target="tbldefinitiva"
+                                    fileName="definitivas"/>
+                </h:commandLink>
+
+                <h:commandLink class="a">
+                    <p:graphicImage name="/assets/xml.png"/>
+                    <p:dataExporter type="xml" target="tbldefinitiva"
+                                    fileName="definitivas"/>
+                </h:commandLink>
+                <br />
+                <h:commandLink action="#{definitivaController.prepareCreate}" value="#{bundle.ListDefinitivaCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListDefinitivaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

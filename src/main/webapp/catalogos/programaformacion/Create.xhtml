@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateProgramaformacionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup><h:outputLabel class="msjObligatorios"
+                               value ="#{bundle.msjObligatorios}" /> 
+                <p:separator> </p:separator>
+            
+            <h:form>
+                <h:panelGrid columns="3">
+                   <h:outputLabel value="#{bundle.CreateProgramaformacionLabel_nombre}" for="nombre" />
+                    <p:inputText id="nombre" value="#{programaformacionController.selected.nombre}" 
+                                 title="#{bundle.CreateProgramaformacionTitle_nombre}" required="true" 
+                                 requiredMessage="#{bundle.CreateProgramaformacionRequiredMessage_nombre}"
+                                 maxlength="30">
+                         <p:keyFilter regEx="/[A-Z Ñ]/i"/>
+                    </p:inputText>
+                                                            <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateProgramaformacionLabel_codigo}" for="codigo" />
+                    <p:inputText id="codigo" value="#{programaformacionController.selected.codigo}" 
+                                 title="#{bundle.CreateProgramaformacionTitle_codigo}" required="true"
+                                 requiredMessage="#{bundle.CreateProgramaformacionRequiredMessage_codigo}"
+                                 maxlength="10">
+                         <p:keyFilter regEx="/[0-9]/i"/>
+                    </p:inputText>
+                                                            <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                    <h:outputLabel value="#{bundle.CreateProgramaformacionLabel_sigla}" for="sigla" />
+                    <p:inputText id="sigla" value="#{programaformacionController.selected.sigla}"
+                                 title="#{bundle.CreateProgramaformacionTitle_sigla}" required="true"
+                                 requiredMessage="#{bundle.CreateProgramaformacionRequiredMessage_sigla}"
+                                 maxlength="10">
+                         <p:keyFilter regEx="/[A-Z Ñ]/i"/>
+                    </p:inputText>
+                                                            <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{programaformacionController.create}" value="#{bundle.CreateProgramaformacionSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{programaformacionController.prepareList}" value="#{bundle.CreateProgramaformacionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateProgramaformacionIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

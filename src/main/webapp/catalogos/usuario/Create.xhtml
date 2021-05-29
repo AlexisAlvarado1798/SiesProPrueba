@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateUsuarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputLabel class="msjObligatorios"
+                               value ="#{bundle.msjObligatorios}" /> 
+                <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{bundle.CreateUsuarioLabel_nombreusuario}" for="nombreusuario" />
+                    <p:inputText id="nombreusuario" value="#{usuarioController.selected.nombreusuario}" 
+                                 title="#{bundle.CreateUsuarioTitle_nombreusuario}" required="true"
+                                 requiredMessage="#{bundle.CreateUsuarioRequiredMessage_nombreusuario}"
+                                 maxlength="30">
+                         <p:keyFilter regEx="/[A-Z ]/i"/>
+                    </p:inputText>
+                     <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    
+                    <h:outputLabel value="#{bundle.CreateUsuarioLabel_contrasena}" for="contrasena" />
+                    
+                    <p:password id="contrasena1" value="#{usuarioController.selected.contrasena}" 
+                                feedback="true" match="pass2"
+                                weakLabel="Debil" goodLabel="Buena" strongLabel="Fuerte"
+                                label="Contrseña" promptLabel="Por favor ingrese una contraseña"
+                                 title="#{bundle.CreateUsuarioTitle_contrasena}" required="true"
+                                 requiredMessage="#{bundle.CreateUsuarioRequiredMessage_contrasena}"
+                                 validatorMessage="las contraseñas no coinciden"/>
+                    
+                     <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                     
+                      <h:outputLabel value="Confimar contraseña: " for="pass2" />
+                    
+                    <p:password id="pass2" value="#{usuarioController.selected.contrasena}" 
+                                feedback="true" 
+                                weakLabel="Debil" goodLabel="Buena" strongLabel="Fuerte"
+                                label="Confirmar contraseña" promptLabel="Por favor confirme la contraseña"
+                                 title="#{bundle.CreateUsuarioTitle_contrasena}" required="true"/>
+                    
+                    
+                     <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                     
+                     <h:outputLabel value=" Es Administrador: " />
+                     <p:selectBooleanCheckbox id="tipousuarioenum" value="#{usuarioController.adminChecked}" />
+                    
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    
+                    <h:outputText   value="Estado"/>
+                    <p:selectOneMenu id="fkEstado" value="#{usuarioController.estado}">
+                        <f:selectItems value="#{estadoController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                     
+                           <h:outputText   value="Periodo de activacion "/>
+                           <p:column>
+                               Desde:
+                               <p:calendar id="fInicio" mindate="today();" locale="es" value="#{usuarioController.fechaInicioEstado}" readonlyInput="true" autocomplete="false">
+                                   <p:ajax event="focus" update="fFin"></p:ajax> </p:calendar>
+                               Hasta:
+                               <p:calendar id="fFin" mindate="#{usuarioController.fechaInicioEstado}" locale="es" value="#{usuarioController.fechaFinEstado}" readonlyInput="true" />
+                               
+                           </p:column>
+                           
+                    
+                     <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    
+                    <h:outputLabel value="#{bundle.CreateUsuarioLabel_fkPersona}" for="Persona" />
+                  
+                     <p:autoComplete id="fkPersona"
+                                     value="#{usuarioController.selected.fkPersona}"
+                                     completeMethod="#{personaController.completarText}"
+                                     maxlength="10" minQueryLength="3" placeholder="identificaión ó nombres"
+                                     requiredMessage="#{bundle.CreateUsuarioRequiredMessage_fkPersona}"
+                                     onkeypress="return validarAlfanumerico(event);"/>
+                       <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{usuarioController.create}" value="#{bundle.CreateUsuarioSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{usuarioController.prepareList}" value="#{bundle.CreateUsuarioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateUsuarioIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

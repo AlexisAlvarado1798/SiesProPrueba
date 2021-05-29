@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/catalogos/templateAdmin.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateTipoidentificacionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+              <h:outputLabel class="msjObligatorios"
+                               value ="#{bundle.msjObligatorios}" /> 
+                <p:separator> </p:separator>
+            <h:form>
+                <h:panelGrid columns="3">
+                   <h:outputLabel value="#{bundle.CreateTipoidentificacionLabel_codigo}" for="codigo" />
+                    <p:inputText id="codigo" value="#{tipoidentificacionController.selected.codigo}" 
+                                 title="#{bundle.CreateTipoidentificacionTitle_codigo}" required="true" 
+                                 requiredMessage="#{bundle.CreateTipoidentificacionRequiredMessage_codigo}"/>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                    <h:outputLabel value="#{bundle.CreateTipoidentificacionLabel_descripcion}" for="descripcion" />
+                    <p:inputText id="descripcion" value="#{tipoidentificacionController.selected.descripcion}" 
+                                 title="#{bundle.CreateTipoidentificacionTitle_descripcion}" required="true" 
+                                 requiredMessage="#{bundle.CreateTipoidentificacionRequiredMessage_descripcion}"/>
+                    <h:outputLabel value="*" class="asterisco"> </h:outputLabel> 
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{tipoidentificacionController.create}" value="#{bundle.CreateTipoidentificacionSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{tipoidentificacionController.prepareList}" value="#{bundle.CreateTipoidentificacionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateTipoidentificacionIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
